@@ -36,10 +36,40 @@ class View:
         self.txt_titolo = ft.Text(value="Biblioteche di Torino", size=38, weight=ft.FontWeight.BOLD)
 
         # --- Sezione 2: Filtraggio ---
-        # TODO
+        # da fare
+        self.dd_biblioteca = ft.Dropdown(
+            label="Seleziona Biblioteca",
+            width=300,
+            options=[],
+            on_select=self.controller.leggi_biblioteca
+        )
+
+        self.dd_genere = ft.Dropdown(
+            label="Seleziona Genere",
+            width=300,
+            options=[],
+            on_select=self.controller.leggi_genere
+        )
+
+        # Riga per disporre i filtri orizzontalmente
+        row_filtri = ft.Row(
+            controls=[self.dd_biblioteca, self.dd_genere],
+            alignment=ft.MainAxisAlignment.CENTER,
+            spacing=20
+        )
 
         # Sezione 3: Libri
-        # TODO
+        # da fare
+        self.btn_mostra = ft.Button(
+            content="Mostra Libri",
+            on_click=self.controller.mostra_libri
+        )
+
+        self.lst_libri = ft.ListView(
+            expand=True,
+            spacing=10,
+            height=400  # Altezza per gestire lo scroll dei libri
+        )
 
         # --- Toggle Tema ---
         self.toggle_cambia_tema = ft.Switch(label="Tema scuro", value=True, on_change=self.cambia_tema)
@@ -53,11 +83,19 @@ class View:
             ft.Divider(),
 
             # Sezione 2: Filtraggio
-            # TODO
+            # da fare
+            row_filtri,
+            ft.Container(height=10),  # Spazio vuoto
 
             # Sezione 3: Libri
-            # TODO
+            # da fare
+            self.btn_mostra,
+            self.lst_libri
         )
+
+        # Popoliamo i menu a tendina chiedendolo al controller prima di fare l'update finale della pagina
+        if self.controller:
+            self.controller.popola_dropdowns()
 
         self.page.scroll = "adaptive"
         self.page.update()
